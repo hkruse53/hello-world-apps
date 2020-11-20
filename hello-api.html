@@ -1,0 +1,53 @@
+<!-- assembled from examples on w3schools.com and other sites -->
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Time</h2>
+<p id="theTime"></p>
+
+<h2>Processes</h2>
+<p id="procs"></p>
+
+<h2>Main Disk Utilization</h2>
+<p id="util"></p>
+
+<script>
+function getTime() {
+	d = new Date();
+	document.getElementById("theTime").innerHTML = d.getHours() + ':' + d.getMinutes();
+}
+
+async function fetchProc() {
+    let procapi = await fetch('http://ancient1.hans-kruse.net:5000/procs');
+    let prcount = await procapi.text();
+    console.log(prcount)
+    document.getElementById("procs").innerHTML = prcount;
+}
+
+async function fetchUtil() {
+    let utapi = await fetch('http://ancient1.hans-kruse.net:5000/util');
+    let utval = await utapi.text();
+    console.log(utval)
+    document.getElementById("util").innerHTML = utval;
+}
+
+
+/* function fetchProc() {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("procs").innerHTML = this.responseText;
+        }
+    };
+    req.open("GET", "http://ancient1.hans-kruse.net:5000/procs", true);
+    req.send();
+} */
+getTime();
+fetchProc();
+fetchUtil();
+
+</script>
+
+</body>
+</html>
